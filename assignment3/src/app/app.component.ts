@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { WeatherService } from './services/weather.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,18 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class AppComponent {
-  title = 'assignment3';
-  currentDate = new Date();
+
+  currentDate : Date;
+  temperature;
+
+  constructor(private weatherService:WeatherService) {
+
+  }
+
+  ngOnInit() {
+  this.currentDate = new Date();
+  this.weatherService.getTemperature().subscribe(temperature => {
+    this.temperature = temperature['main']['temp'];
+  })
+  }
 }
